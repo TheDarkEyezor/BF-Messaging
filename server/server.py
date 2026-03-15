@@ -34,6 +34,7 @@ Server → Client:
   +INCOMING GROUP <groupname> <from> <ISO-timestamp> <message>  ← pushed group
   +HIST <from> <ISO-timestamp> <message>                ← history 1:1
   +GROUP <groupname> <member_list>                      ← group created/joined
+  +NEW_GROUP <groupname>                                ← pushed when added to a group
   +MEMBERS <groupname> <member1> <member2> ...          ← list response
   +END
 """
@@ -416,7 +417,7 @@ async def handle_client(
                     if target in connected_clients:
                         try:
                             connected_clients[target].write(
-                                f"+GROUP {groupname} {username} added you\n".encode()
+                                f"+NEW_GROUP {groupname}\n".encode()
                             )
                             await connected_clients[target].drain()
                         except Exception:

@@ -137,6 +137,8 @@ class ChatClient:
                         self._display_group_incoming(line)
                     elif line.startswith("+INCOMING "):
                         self._display_incoming(line)
+                    elif line.startswith("+NEW_GROUP "):
+                        self._handle_new_group(line)
                     else:
                         self._resp_queue.put(line)
         except Exception:
@@ -181,6 +183,17 @@ class ChatClient:
             sys.stdout.flush()
         else:
             print(line)
+
+    def _handle_new_group(self, line: str) -> None:
+        """Handle a real-time push notification that the user was added to a group."""
+        # +NEW_GROUP <groupname>
+        groupname = line[len("+NEW_GROUP "):].strip()
+        if groupname and groupname not in self._groups:
+            self._groups.append(groupname)
+        sys.stdout.write(
+            f"\n  *** You were added to group '{groupname}' ***\n\n"
+        )
+        sys.stdout.flush()
 
     # ------------------------------------------------------------------
     # Low-level send / receive
