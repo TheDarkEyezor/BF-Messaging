@@ -1,7 +1,8 @@
-REGISTER command builder
-stdin  one line username
-stdout REGISTER username newline
+register command builder
+input is one username line
+output is register then space then username then newline
 
+build the word register
 ++++++++[>++++++++++<-]>++.
 -------------.
 ++.
@@ -10,6 +11,10 @@ stdout REGISTER username newline
 +.
 ---------------.
 +++++++++++++.
+
+write one space then copy username until newline
 [-]++++++++++++++++++++++++++++++++.
 ,----------[++++++++++.,----------]
+
+write final newline
 ++++++++++.
